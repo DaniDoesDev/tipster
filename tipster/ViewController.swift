@@ -18,10 +18,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        billField.becomeFirstResponder()
     }
 
     @IBAction func onTap(_ sender: Any) {
-        view.endEditing(true);
+        //view.endEditing(true);
     }
     
     @IBAction func calculateTip(_ sender: Any) {
@@ -36,8 +37,20 @@ class ViewController: UIViewController {
         let total = bill + tip
         
         // Update the tip and total labels
-        tipLabel.text = String(format: "$%.2f", tip)
-        totalLabel.text = String(format: "$%.2f", total)
+        
+        tipLabel.text = convertDoubletoCurrency(amount: tip)
+        totalLabel.text = convertDoubletoCurrency(amount: total)
+        
+        //tipLabel.text = String(format: "$%.2f", tip)
+        //totalLabel.text = String(format: "$%.2f", total)
+    }
+    
+    func convertDoubletoCurrency(amount: Double) -> String {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .currency
+        numberFormatter.locale = Locale.current
+        
+        return numberFormatter.string(from: NSNumber(value: amount))!
     }
 }
 
